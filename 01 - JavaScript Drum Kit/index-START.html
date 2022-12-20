@@ -59,6 +59,26 @@
 
 <script>
 
+
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    console.log(audio);
+    if(!audio) return; //stop function from running all together, helpful in case of keys without sounds like q
+    audio.currentTime = 0; //rewind to start of the element, in case of hitting the same key on repeat
+    audio.play();
+    key.classList.add('playing'); //adds CSS yellow border box animation
+  };
+    
+    function removeTransition(e){
+      if(e.propertyName !== 'transform') return; //skip if it's not a transform
+      console.log(e.propertyName);
+    this.classList.remove('playing');   
+    }
+ 
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend',removeTransition));
+  window.addEventListener('keydown', playSound);
 </script>
 
 
